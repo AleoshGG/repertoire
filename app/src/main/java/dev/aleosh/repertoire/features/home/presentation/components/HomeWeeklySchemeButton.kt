@@ -1,7 +1,9 @@
 package dev.aleosh.repertoire.features.home.presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,10 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.aleosh.repertoire.R
 import dev.aleosh.repertoire.core.theme.RepertoireTheme
 
 @Composable
@@ -34,29 +39,48 @@ fun HomeWeeklySchemeButton(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surfaceContainer
     ) {
-        Box(modifier = Modifier.padding(horizontal = 28.dp, vertical = 22.dp)) {
-            Text(
-                text = "Esquema\nsemanal",
-                modifier = Modifier.align(Alignment.CenterStart),
-                color = MaterialTheme.colorScheme.primary,
-                fontSize = 34.sp,
-                lineHeight = 34.sp,
-                fontWeight = FontWeight.Bold
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Capa de fondo: Imagen
+            Image(
+                painter = painterResource(id = R.drawable.home_schema_01),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                // Agregamos un ColorFilter para oscurecer/teñir la imagen
+                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(
+                    androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.3f),
+                    blendMode = androidx.compose.ui.graphics.BlendMode.Darken
+                )
             )
-            Row(
-                modifier = Modifier.align(Alignment.CenterEnd),
-                verticalAlignment = Alignment.CenterVertically
+            
+            // Capa de contenido: Texto y botón
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 28.dp, vertical = 22.dp)
             ) {
                 Text(
-                    text = "Ver",
+                    text = "Esquema\nsemanal",
+                    modifier = Modifier.align(Alignment.CenterStart),
                     color = MaterialTheme.colorScheme.primary,
-                    style = MaterialTheme.typography.bodyLarge
+                    fontSize = 34.sp,
+                    lineHeight = 34.sp,
+                    fontWeight = FontWeight.Bold
                 )
-                Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
+                Row(
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Ver",
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }

@@ -1,8 +1,12 @@
 package dev.aleosh.repertoire.features.home.presentation.components
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,12 +17,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.aleosh.repertoire.R
 import dev.aleosh.repertoire.core.theme.RepertoireTheme
 
 @Composable
@@ -41,6 +50,7 @@ fun HomeDirectorSection(
         ) {
             DirectorButton(
                 text = "Añadir\nCanto",
+                imageRes = R.drawable.home_option_01,
                 onClick = onAddSongClick,
                 modifier = Modifier
                     .weight(0.45f)
@@ -53,6 +63,7 @@ fun HomeDirectorSection(
             ) {
                 DirectorButton(
                     text = "Opción",
+                    imageRes = R.drawable.home_option_02,
                     onClick = onFirstOptionClick,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -61,6 +72,7 @@ fun HomeDirectorSection(
                 )
                 DirectorButton(
                     text = "Opción",
+                    imageRes = R.drawable.home_option_03,
                     onClick = onSecondOptionClick,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -75,6 +87,7 @@ fun HomeDirectorSection(
 @Composable
 private fun DirectorButton(
     text: String,
+    @DrawableRes imageRes: Int,
     onClick: () -> Unit,
     containerColor: Color,
     modifier: Modifier = Modifier
@@ -85,19 +98,33 @@ private fun DirectorButton(
         shape = RoundedCornerShape(16.dp),
         color = containerColor
     ) {
-        Column(
-            modifier = Modifier.padding(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = text,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 28.sp,
-                lineHeight = 30.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                colorFilter = ColorFilter.tint(
+                    Color.Black.copy(alpha = 0.5f), // Oscurecemos un poco para que el texto sea legible
+                    blendMode = BlendMode.Darken
+                )
             )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = text,
+                    color = Color.White, // Usamos texto blanco para contrastar con la imagen oscura
+                    fontSize = 28.sp,
+                    lineHeight = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
